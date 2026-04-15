@@ -1,0 +1,5 @@
+index_type,query_time_ms
+brute_force,0.0381
+kdtree,0.442
+rtree,0.3536
+quadtree,2.4277

@@ -1,0 +1,17 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Native build outputs
+*.o
+*.so
+src/maritime/ais_parser
+
+# Generated scratch data
+data/*.csv
+
+# Optional local cache/config
+.mypy_cache/
+.ruff_cache/
+.DS_Store

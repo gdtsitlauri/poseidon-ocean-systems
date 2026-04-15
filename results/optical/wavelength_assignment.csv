@@ -1,0 +1,6 @@
+src,dst,path,wavelength,blocked
+NYC,Dakar,NYC->Lisbon->Dakar,0,False
+NYC,Rio,NYC->Lisbon->Dakar->Rio,1,False
+London,Dakar,London->Lisbon->Dakar,2,False
+Lisbon,Rio,Lisbon->Dakar->Rio,3,False
+NYC,Lisbon,NYC->Lisbon,2,False

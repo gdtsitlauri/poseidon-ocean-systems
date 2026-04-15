@@ -1,0 +1,115 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{url}
+
+\title{POSEIDON: A Multi-Language Research Framework for Maritime Analytics, GIS, CAD, and Optical Network Optimization}
+\author{\IEEEauthorblockN{POSEIDON Team}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+POSEIDON is a reproducible research framework that connects maritime informatics, geographic information systems (GIS), computer-aided design (CAD), and optical network optimization under a unified experimental workflow. The platform combines Python orchestration with optional Pascal, C++, and VHDL components to evaluate heterogeneous engineering pipelines using a common artifact-driven methodology. At the system level, POSEIDON-TRIDENT provides a joint optimization layer that compares integrated planning against independent subsystem decision making. The current release focuses on synthetic but reproducible workloads, stable result generation, and cross-domain interoperability suitable for experimentation, teaching, and rapid prototyping.
+\end{abstract}
+
+\section{Introduction}
+Ocean infrastructure planning increasingly depends on the interaction between vessel traffic analysis, subsea geography, engineered structures, and communication network resilience. In practice, these domains are often studied independently, even though operational decisions in one layer can alter cost, risk, or capacity in another. POSEIDON was designed as a compact research environment for exploring these couplings without requiring a large production stack.
+
+The framework emphasizes three goals. First, it provides a single repository in which maritime, GIS, CAD, and optical workflows can be executed through a common Python entry point. Second, it preserves multi-language interoperability by integrating optional Pascal, C++, and VHDL components where they are pedagogically or experimentally useful. Third, it produces stable CSV, HTML, STL, PNG, and LaTeX artifacts that can be used directly in downstream analysis and manuscript generation.
+
+\section{Contributions}
+The present framework makes the following contributions:
+\begin{enumerate}
+\item A unified repository structure for four engineering domains with a shared execution model and reproducible outputs.
+\item A multi-language integration pattern in which Python coordinates optional native modules implemented in Pascal, C++, and VHDL.
+\item A lightweight joint optimizer, POSEIDON-TRIDENT, for comparing coupled planning decisions against independently optimized baselines.
+\item An artifact-driven paper workflow in which experiment outputs are transformed automatically into LaTeX-ready metrics tables.
+\end{enumerate}
+
+\section{System Overview}
+POSEIDON is organized into five modules. The maritime layer parses AIS-like data and estimates route, collision, anomaly, and congestion indicators. The GIS layer performs spatial indexing, cable-route analysis, coordinate conversion, and map generation. The CAD layer evaluates geometry utilities and exports simple design artifacts. The optical layer models routing and wavelength assignment together with switch validation hooks. Finally, the TRIDENT layer aggregates operational cost, failure risk, maintenance burden, and throughput penalties into a joint optimization workflow.
+
+Although the framework uses lightweight implementations, its architecture reflects a realistic pattern for interdisciplinary research software. Domain-specific computations are isolated within module pipelines, while result files are normalized into a shared artifact tree under \texttt{results/}. This separation reduces coupling between experimental logic and reporting logic, making it easier to validate outputs and regenerate manuscript metrics.
+
+\section{Maritime Analytics Layer}
+The maritime pipeline generates synthetic AIS-like vessel trajectories and computes route optimization, collision-risk indicators, anomaly scores, and port-congestion estimates. Great-circle distance, fuel-use estimation, and closest-point-of-approach style metrics are used as compact proxies for operational awareness. The resulting artifacts are exported to \texttt{results/maritime}.
+
+An additional design goal of this layer is language interoperability. A Pascal parser executable is used for AIS-style CSV export, and an optional Pascal shared-library bridge can be loaded from Python for score computation. If the Pascal toolchain is unavailable, the framework falls back to a compatible Python path while recording bridge status explicitly. This allows the maritime module to remain executable in constrained environments without hiding whether the native path was actually exercised.
+
+\section{GIS and Spatial Analysis Layer}
+The GIS module focuses on cable geography and spatial query behavior. It benchmarks multiple indexing strategies, including brute-force search, KD-tree style acceleration, and a custom quadtree implementation. It also generates cable-route analysis summaries, coordinate-conversion outputs, and a synthetic interactive map artifact.
+
+The intent is not to claim production-grade hydrographic accuracy, but to provide a controlled environment in which geometric and geospatial ideas can be compared using stable inputs. Optional scientific Python dependencies improve fidelity when available, while fallback approximations keep the pipeline operational when those packages are absent. This makes the GIS layer suitable for repeatable integration testing as well as method prototyping.
+
+\section{CAD and Geometry Layer}
+The CAD module provides a compact set of geometry utilities including Bezier-style evaluation, NURBS-like weighted sampling, surface-of-revolution generation, mesh smoothing, normal estimation, ray-triangle style intersection checks, and STL export. These components are intentionally lightweight, but they cover common geometric operations that appear in marine design and infrastructure prototyping workflows.
+
+To support cross-language experimentation, the repository includes a small C++ shared-library bridge invoked from Python. The bridge exercises representative scalar geometry kernels and records native-bridge status in the benchmark outputs. This makes the CAD layer useful not only for generating artifacts, but also for validating that Python-native interoperability remains functional across environments.
+
+\section{Optical Network Layer}
+The optical module models a simplified submarine communication network using graph-based routing and wavelength-assignment heuristics. It compares simulated blocking behavior with an Erlang-B style analytical baseline and a compact optimization-based assignment surrogate. Failure-recovery behavior is evaluated by removing a critical edge and checking whether traffic can be rerouted through the remaining graph.
+
+The optical layer also includes VHDL source files for a minimal switching component and testbench. When a GHDL toolchain is available, the framework attempts analysis, elaboration, and simulation in an isolated temporary work directory. If simulation is unavailable or fails, the Python pipeline continues and records the resulting status. This behavior is important for reproducibility because it avoids conflating environment limitations with algorithmic failures.
+
+\section{POSEIDON-TRIDENT Joint Optimization}
+The TRIDENT layer provides the cross-domain optimization abstraction used by the framework. Each candidate solution is modeled by a tuple containing route cost, failure risk, maintenance cost, and throughput penalty. The joint objective can be expressed as
+\begin{equation}
+\min \; J = C_{\text{route}} + R_{\text{failure}} + M_{\text{maint}} + P_{\text{throughput}}
+\end{equation}
+subject to feasibility constraints derived from route and risk thresholds.
+
+The current implementation uses a Pareto-inspired ranking procedure with nondominated sorting and crowding distance to prioritize diverse feasible candidates. While lightweight compared with full multi-objective evolutionary algorithms, this strategy is sufficient for demonstrating the difference between joint decision making and a decomposed baseline. The baseline is constructed by applying penalties to independently optimized subsystems, thereby creating a reference point for measuring whether coupled planning is beneficial.
+
+\section{Experimental Setup}
+All experiments are executed through a single orchestration path, \texttt{python3 -m src.poseidon\_trident.run\_all}, which triggers the domain pipelines and refreshes manuscript metrics from generated CSV files. The current release uses synthetic but deterministic seeds for repeatable evaluation and stores outputs under stable filenames in \texttt{results/}. This design allows the test suite to validate both algorithmic behavior and artifact existence.
+
+The experiments are intended to answer three practical questions:
+\begin{enumerate}
+\item Can the repository execute heterogeneous pipelines reproducibly in one pass?
+\item Do the native-language bridges and simulation hooks degrade gracefully when optional toolchains are missing?
+\item Does the TRIDENT layer provide a measurable benefit over a decomposed optimization baseline on the synthetic workloads used here?
+\end{enumerate}
+
+\section{Results and Discussion}
+The generated metrics embedded below are derived directly from the current result artifacts.
+\input{generated_metrics.tex}
+
+Several observations follow from the current outputs. First, the framework produces consistent end-to-end artifacts across all modules, which is essential for a cross-domain repository whose primary purpose is systems experimentation rather than single-algorithm benchmarking. Second, the GIS timing and maritime fuel metrics demonstrate that the output-generation path is numerically populated rather than being limited to empty placeholder files. Third, the difference between the joint and independent TRIDENT means indicates that the coupled objective can outperform the baseline on the synthetic candidate sets used in this release.
+
+These results should be interpreted carefully. The current experiments emphasize integration stability and comparability over realism. Consequently, the reported values are best understood as internal consistency checks and relative indicators, not as field-validated operational benchmarks.
+
+\section{Limitations}
+POSEIDON currently operates on synthetic workloads and simplified domain models. The AIS records are pseudo-realistic rather than sourced from live feeds, the GIS routes are stylized, the CAD outputs are lightweight prototypes, and the optical topology is intentionally small. In addition, the optimization layer is designed as a compact research demonstrator rather than a fully calibrated deployment solver.
+
+These limitations are deliberate: they keep the framework inspectable and reproducible. However, any claim about real-world maritime operations, commercial cable engineering, or carrier-grade optical planning would require substantially richer data, validated domain constraints, and broader comparative evaluation.
+
+\section{Future Work}
+Several natural extensions follow from the current architecture. The maritime layer can be connected to real AIS logs and weather products. The GIS layer can incorporate bathymetry, exclusion zones, and more rigorous geodesic routing. The CAD layer can be extended with true mesh processing kernels and compiled bindings packaged through a standard build system. The optical layer can be expanded to include larger topologies, survivability studies, and explicit capacity constraints. Finally, the TRIDENT optimizer can evolve toward a more complete multi-objective framework with richer constraints and ablation studies.
+
+\section{Conclusion}
+POSEIDON demonstrates that a compact multi-language repository can still support meaningful cross-domain experimentation when it is organized around reproducible artifacts and explicit interoperability boundaries. The framework does not yet replace production engineering toolchains, but it does provide a credible baseline for integrated research workflows spanning maritime analytics, GIS, CAD, and optical networks. In that sense, POSEIDON is best viewed as an extensible systems-research platform: small enough to inspect, but structured enough to grow.
+
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{6}
+\bibitem{nsga2}
+K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan, ``A fast and elitist multiobjective genetic algorithm: NSGA-II,'' \emph{IEEE Transactions on Evolutionary Computation}, vol. 6, no. 2, pp. 182--197, 2002.
+
+\bibitem{erlang}
+A. K. Erlang, ``Solutions of some problems in the theory of probabilities of significance in automatic telephone exchanges,'' \emph{The Post Office Electrical Engineers' Journal}, vol. 10, pp. 189--197, 1917.
+
+\bibitem{cad}
+G. Farin, \emph{Curves and Surfaces for CAGD: A Practical Guide}. San Francisco, CA, USA: Morgan Kaufmann, 2002.
+
+\bibitem{gis}
+M. de Berg, O. Cheong, M. van Kreveld, and M. Overmars, \emph{Computational Geometry: Algorithms and Applications}. Berlin, Germany: Springer, 2008.
+
+\bibitem{ais}
+International Telecommunication Union, ``Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band,'' Recommendation ITU-R M.1371, 2014.
+
+\bibitem{repo}
+POSEIDON project repository, 2026.
+\end{thebibliography}
+
+\end{document}

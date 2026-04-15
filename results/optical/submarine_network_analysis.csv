@@ -1,0 +1,4 @@
+offered_traffic_erlang,channels,blocking_probability,scheme
+12.0,16,0.06041259246256451,ErlangB
+12.0,16,0.0,RWA_simulated
+12.0,16,0.0,ilp_rwa_fallback
