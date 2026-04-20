@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+networkx
+matplotlib
+plotly
+folium
+shapely
+geopandas
+cvxpy
+pytest

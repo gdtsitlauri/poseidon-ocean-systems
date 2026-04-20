@@ -1,0 +1,3 @@
+failure_edge,recoverable,reroute_hops,vhdl_status
+NYC-Lisbon,True,3,
+,True,0,ghdl_ok

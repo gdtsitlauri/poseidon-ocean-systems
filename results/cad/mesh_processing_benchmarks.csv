@@ -1,0 +1,4 @@
+mesh_size,simplification_ms,smoothing_ms,normal_estimation_ms,cpp_bridge_status,cpp_midpoint,cpp_weighted_sample,cpp_hit_t
+1000,2.1,1.4,0.7,cpp_ok,1.0,0.9999999999993333,0.5
+10000,9.7,6.8,3.4,cpp_ok,1.0,0.9999999999993333,0.5
+50000,49.2,31.0,16.2,cpp_ok,1.0,0.9999999999993333,0.5
