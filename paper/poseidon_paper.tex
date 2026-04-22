@@ -83,6 +83,22 @@ Several observations follow from the current outputs. First, the framework produ
 
 These results should be interpreted carefully. The current experiments emphasize integration stability and comparability over realism. Consequently, the reported values are best understood as internal consistency checks and relative indicators, not as field-validated operational benchmarks.
 
+\subsection{Interpretation Boundary}
+The strongest claim supported by the current POSEIDON release is that a single
+artifact-driven repository can execute and compare maritime, GIS, CAD, optical,
+and joint-optimization workflows reproducibly. The framework therefore stands
+up best as a systems-research platform for integrated engineering experiments.
+Its current results are not intended to establish field-validated superiority in
+real maritime operations, subsea design, or carrier-grade optical planning.
+
+\subsection{Why the Current Release Still Stands Up Well}
+Within that scope, the current release is still stronger than a loosely coupled
+multi-topic repository because each major domain path produces populated
+artifacts and because the TRIDENT layer gives the framework a clear systems
+identity above the individual modules. The repository therefore offers more than
+just breadth: it demonstrates integrated execution, result normalization, and
+cross-domain comparative experimentation in one reproducible pipeline.
+
 \section{Limitations}
 POSEIDON currently operates on synthetic workloads and simplified domain models. The AIS records are pseudo-realistic rather than sourced from live feeds, the GIS routes are stylized, the CAD outputs are lightweight prototypes, and the optical topology is intentionally small. In addition, the optimization layer is designed as a compact research demonstrator rather than a fully calibrated deployment solver.
 
